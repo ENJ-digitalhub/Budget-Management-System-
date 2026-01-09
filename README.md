@@ -1,11 +1,11 @@
 # 💰 BudgetCLI – Budget Management System
 
 ![Status](https://img.shields.io/badge/Status-v1.5_Active-green)
-![Java](https://img.shields.io/badge/Java-8%2B-blue)
+![Python](Python)
 ![SQLite](https://img.shields.io/badge/Database-SQLite-orange)
 ![Interface](https://img.shields.io/badge/Interface-CLI-lightgrey)
 
-**BudgetCLI** is a **Java-based command-line application** built to help users track **daily allowances, budgets, expenses, income, and savings** in a structured, reliable, and efficient way.
+**BudgetCLI** is a **Python command-line application** built to help users track **daily allowances, budgets, expenses, income, and savings** in a structured, reliable, and efficient way.
 
 Inspired by real-life daily budgeting records, BudgetCLI replaces complex spreadsheets with a **fast, offline, and persistent CLI tool** powered by **SQLite**.
 
@@ -63,11 +63,10 @@ Inspired by real-life daily budgeting records, BudgetCLI replaces complex spread
 
 | Component | Technology |
 |---------|-----------|
-| Language | Java |
+| Language | Python |
 | Database | SQLite |
 | Configuration | JSON |
 | Interface | Command Line (CMD / Terminal) |
-| Build Output | Executable JAR |
 
 ---
 
@@ -85,8 +84,7 @@ BudgetCLI/
 │   ├── db/                  # Database connection & queries
 │   ├── models/              # Data models
 │   └── utils/               # Helper utilities
-├── README.md
-└── BudgetCLI.jar
+└── README.md
 ```
 
 ---
@@ -195,7 +193,7 @@ Encourage daily financial discipline
 
 Provide clear visibility into spending habits
 
-Serve as a portfolio-grade Java CLI project
+Serve as a portfolio-grade Python CLI project
 
 
 
@@ -211,4 +209,4 @@ This project is licensed under the MIT License — free to use, modify, and dist
 ## 👤 Author
 
 ENJ-digitalhub
-Java Developer | CLI & Systems Projects
+Python Developer | CLI & Systems Projects
