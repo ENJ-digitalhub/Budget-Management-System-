@@ -1,7 +1,7 @@
 # 💰 BudgetCLI – Budget Management System
 
 ![Status](https://img.shields.io/badge/Status-v1.5_Active-green)
-![Python](https://img.sheilds.io/badge/Python-8%2B-Blue)
+![Python](https://img.shields.io/badge/Python-3.8%2B-blue)
 ![SQLite](https://img.shields.io/badge/Database-SQLite-orange)
 ![Interface](https://img.shields.io/badge/Interface-CLI-lightgrey)
 
