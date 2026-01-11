@@ -75,16 +75,18 @@ Inspired by real-life daily budgeting records, BudgetCLI replaces complex spread
 ```text
 BudgetCLI/
 ├── data/
-│   └── budget.db            # SQLite database
+│   └── budget.db              # SQLite database
 ├── config/
-│   └── settings.json        # Application configuration
+│   └── settings.json          # Application configuration
 ├── src/
-│   ├── app/                 # Application entry point
-│   ├── commands/            # CLI command handlers
-│   ├── db/                  # Database connection & queries
-│   ├── models/              # Data models
-│   └── utils/               # Helper utilities
+│   ├── app.py                 # Application entry point
+│   ├── commands.py            # CLI command parsing & dispatch
+│   ├── database.py            # Database connection & queries
+│   ├── user.py                # User / session / daily state model
+│   ├── utils.py               # Utilities & helpers
+│   └── help.py                # Help & command documentation
 └── README.md
+
 ```
 
 ---
