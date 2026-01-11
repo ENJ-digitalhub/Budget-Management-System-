@@ -75,7 +75,10 @@ Inspired by real-life daily budgeting records, BudgetCLI replaces complex spread
 ```text
 BudgetCLI/
 ├── data/
-│   └── budget.db              # SQLite database
+│   ├── userA/
+│   │   └── budget.db
+│   ├── userB/
+│   │   └── budget.db
 ├── config/
 │   └── settings.json          # Application configuration
 ├── src/
@@ -155,35 +158,63 @@ day summary
 
 ## 🧩 Version Roadmap
 
-### v1.0
+### 🚀 v1.0 — Single User, Secure, Daily Use (FOUNDATION)
+
+**Goal:** A usable, safe, daily budgeting tool for one user at a time
+
+#### Features
+
+User creation (username + PIN)
+
+PIN-based login
+
+Per-user data directory
+
+```
+data/<username>/budget.db
+```
+
+Automatic DB initialization (LazyMan)
 
 Daily budgeting
 
-Income and expense tracking
+Income & expense tracking
 
 SQLite persistence
 
 Daily summary reports
 
+✔️ This version already feels complete and real
 
-### v1.5
+### 🔧 v1.5 — Productivity & Portability
+
+**Goal:** Make data easier to review and move
+
+#### Features
 
 Monthly summaries
 
 CSV export
 
-Backup and restore support
+Backup & restore
 
+Read-only history navigation improvements
 
-### v2.0
+### 🌐 v2.0 — Power User & Scale
+
+**Goal:** Advanced insights and multiple users
+
+#### Features
 
 Advanced analytics
 
-PIN-based protection
+Category trends
 
-Optional multi-user support
+Yearly reports
 
+Optional multi-user sessions (switch user without restart)
 
+Optional encryption at rest
 
 ---
 
