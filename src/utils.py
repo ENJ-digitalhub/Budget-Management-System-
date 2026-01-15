@@ -2,6 +2,7 @@ import os
 import platform
 
 class Utils:
+    isConfirm=False
     @staticmethod
     def center(string,width):
         padding = int((width-len(string))/2)
@@ -18,27 +19,26 @@ class Utils:
                 print()
     @staticmethod
     def exit():
-        cls()
+        Utils.cls()
         print("Closing Program...")
     @staticmethod
     def confirm(object):
-        isConfirm=false
-        cls()
-        confirm = str(input("Confirm\""+object+"\" (y/n)? "))
+        Utils.cls()
+        confirm = str(input("Confirm \""+object+"\" (y/n)? "))
         if confirm.lower() == "y":
-            cls()
+            Utils.cls()
             print("Confirmed...")
-            isConfirm = true
+            Utils.isConfirm = True
         elif confirm.lower() == "n":
-            cls()
+            Utils.cls()
             print("...")
         else:
             cls
             print("Invaild Input...")
-            confirm(object):
+            Utils.confirm(object)
         pass
     @staticmethod
-    def encrypt_pin(pin: str) -> str:
+    def encrypt(pin: str) -> str:
         if len(pin) != 4:
             raise ValueError("PIN must be 4 digits")
 
@@ -55,11 +55,11 @@ class Utils:
         d3 = (d3 + 7) % 10
         d4 = (d4 + 7) % 10
 
-        encrypted_pin = (d1 * 1000) + (d2 * 100) + (d3 * 10) + d4
+        encryptedPin = (d1 * 1000) + (d2 * 100) + (d3 * 10) + d4
 
-        return f"{encrypted_pin:04d}"
+        return f"{encryptedPin:04d}"
     @staticmethod
-    def decrypt_pin(e_pin: str) -> str:
+    def decrypt(e_pin: str) -> str:
         if len(e_pin) != 4:
             raise ValueError("Encrypted PIN must be 4 digits")
 
