@@ -1,5 +1,6 @@
 from user import User
-from utils import Utils as tools 
+from utils import Utils as tools
+from commands import Commands as cmds
 
 class Main:
     def startupPage():
@@ -23,9 +24,10 @@ class Main:
         print("--- Home ---")
         command = ""
         while True:
-            command = str(input("~~~ ").strip().lower())
+            command = str(input("\n~~~ ").strip().lower())
             if command == "quit":
                 tools.exit()
                 break
-        pass
+            else:
+                cmds.executeCommand(command)
 Main.homePage()
