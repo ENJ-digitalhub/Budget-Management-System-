@@ -11,13 +11,16 @@ class Database:
         max_retries = 5
         retry_delay = 1  # seconds
 
+        # Get the path to the parent folder (where src/ lives)
+        base_dir = os.path.dirname(os.path.abspath(__file__))  # __file__ is src/database.py
+        project_dir = os.path.dirname(base_dir)   
         # Ensure data folder exists
-        data_dir = "data"
+        data_dir = os.path.join(project_dir, "data")
         if not os.path.exists(data_dir):
             os.makedirs(data_dir)
             print("Created data folder for database storage")
 
-        db_path = os.path.join(data_dir, "poultry.db")
+        db_path = os.path.join(data_dir, "budget.db")
 
         for attempt in range(1, max_retries + 1):
             try:
@@ -33,6 +36,7 @@ class Database:
                 cursor.execute("PRAGMA synchronous=NORMAL;")
                 cursor.execute("PRAGMA locking_mode=NORMAL;")
                 cursor.execute("PRAGMA busy_timeout=5000;")
+                cursor.execute("PRAGMA foreign_keys = ON;")
                 conn.commit()
 
                 # Check tables on first connection
@@ -98,44 +102,55 @@ class Database:
     @staticmethod
     def create_all_tables(conn):
         cursor = conn.cursor()
-        daily_records_table = """
-        CREATE TABLE IF NOT EXISTS daily_records (
+        users_table = """
+        CREATE TABLE IF NOT EXISTS users (
+            user_id INTEGER PRIMARY KEY AUTOINCREMENT,
+            firstname TEXT NOT NULL,
+            lastname TEXT NOT NULL,
+            username TEXT UNIQUE NOT NULL,
+            pin TEXT NOT NULL,
+            created_at TEXT DEFAULT CURRENT_TIMESTAMP
+        );
+        """
+        
+        allowance_table = """
+        CREATE TABLE IF NOT EXISTS allowance (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
-            record_date DATE NOT NULL UNIQUE,
-            daily_allowance REAL NOT NULL,
-            created_at DATETIME DEFAULT CURRENT_TIMESTAMP
+            record_date DATE NOT NULL DEFAULT CURRENT_DATE,
+            amount REAL NOT NULL,
+            created_at TIME DEFAULT CURRENT_TIME
         );
         """
 
         expenses_table = """
         CREATE TABLE IF NOT EXISTS expenses (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
-            daily_record_id INTEGER NOT NULL,
-            label TEXT,                -- e.g. "Bus fare", "Lunch", "Netflix"
+            allowance_id INTEGER,
+            label TEXT DEFAULT NULL,                -- e.g. "Bus fare", "Lunch", "Netflix"
             amount REAL NOT NULL,
             created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
-            FOREIGN KEY (daily_record_id) REFERENCES daily_records(id)
+            FOREIGN KEY (allowance_id) REFERENCES allowance(id)
         );
         """
 
         income_table = """
         CREATE TABLE IF NOT EXISTS income (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
-            daily_record_id INTEGER,
-            source TEXT NOT NULL,   -- allowance top-up, profit, gift
+            allowance_id INTEGER,
+            label TEXT DEFAULT NULL,   -- allowance top-up, profit, gift
             amount REAL NOT NULL,
             created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
-            FOREIGN KEY (daily_record_id) REFERENCES daily_records(id)
+            FOREIGN KEY (allowance_id) REFERENCES allowance(id)
         );
         """
         
         savings_table = """
         CREATE TABLE IF NOT EXISTS savings (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
-            daily_record_id INTEGER NOT NULL,
+            allowance_id INTEGER,
             amount REAL NOT NULL,
             created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
-            FOREIGN KEY (daily_record_id) REFERENCES daily_records(id)
+            FOREIGN KEY (allowance_id) REFERENCES allowance(id)
         );
         """
         
@@ -150,7 +165,8 @@ class Database:
         );
         """
 
-        cursor.execute(daily_records_table)
+        cursor.execute(users_table)
+        cursor.execute(allowance_table)
         cursor.execute(expenses_table)
         cursor.execute(income_table)
         cursor.execute(savings_table)
@@ -161,3 +177,35 @@ class Database:
     @staticmethod
     def is_database_ready():
         return Database.is_initialized
+    @staticmethod
+    def run(sql, params=None):
+        conn = Database.connect()  # uses your robust connect() method
+        if not conn:
+            print("Database connection failed. Cannot execute SQL.")
+            return
+        try:
+            cursor = conn.cursor()
+            if params:
+                cursor.execute(sql, params)
+            else:
+                cursor.execute(sql)
+            conn.commit()
+        finally:
+            conn.close()
+    @staticmethod
+    def query(sql, params=None):
+        conn = Database.connect()  # uses your robust connect() method
+        if not conn:
+            print("Database connection failed. Cannot execute SQL.")
+            return
+        try:
+            cursor = conn.cursor()
+            if params:
+                cursor.execute(sql, params)
+            else:
+                cursor.execute(sql)
+            conn.commit()
+        finally:
+            rows = tuple(cursor.fetchall())
+            conn.close()
+            return rows
