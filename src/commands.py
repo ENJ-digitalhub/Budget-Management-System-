@@ -39,53 +39,51 @@ class Commands:
         try:
             Database.run(sql2, params2)
         except sqlite3.OperationalError:
-            Database.run(sql, params)
+            try:
+                Database.run(sql, params)
+            except Exception as e:
+                print(e)
     @staticmethod
     def removeExecutor(commandList):
         print("removing...")
         sql = f"""
-            INSERT INTO {commandList[0]} (amount, label)
-            VALUES (?, ?)
-            """
-        params = (commandList[2], commandList[3])
-        sql2 = f"""
             DELETE FROM {commandList[0]} 
-            WHERE record_date = (?)
+            WHERE id = (?)
             """
-        params2 = (commandList[2],)
+        params = (commandList[2],)
         try:
-            Database.run(sql2, params2)
-        except sqlite3.OperationalError:
-            print("runs second command; need to read up on triggers to continue")
-        pass
+            int(commandList[2])
+            Database.run(sql,params)
+        except Exception as e:
+            print(e)
     @staticmethod
     def modifyExecutor(commandList):
         print("modifying...")
         sql = f"""
-            INSERT INTO {commandList[0]} (amount, label)
-            VALUES (?, ?)
-            """
-        params = (commandList[2], commandList[3])
-        sql2 = f"""
             UPDATE {commandList[0]}
             SET amount = ?, label = ?
-            WHERE record_date = ?
+            WHERE id = ?
             """
-        params2 = (commandList[3],commandList[4],commandList[2],)
+        params = (commandList[3],commandList[4],commandList[2],)
         try:
-            Database.run(sql2, params2)
-        except sqlite3.OperationalError:
-            print("runs second command; need to read up on triggers to continue")
-        pass
+            int(commandList[2])
+            Database.run(sql, params)
+        except Exception as e:
+            print(e)
     @staticmethod
     def showExecutor(commandList):
         print("showing...")
         sql = f"""
             SELECT * FROM {commandList[0]}
             """
-        records = Database.query(sql)
-        for record in records:
-            print(record)
+        try:
+            records = Database.query(sql)
+            for record in records:
+                print(record)
+            if len(records) == 0:
+                print("(No records found...)")
+        except Exception as e:
+            print(e)
     """@staticmethod
     def statusExecutor(commandList):
     @staticmethod
@@ -96,13 +94,16 @@ class Commands:
     def nextExecutor(commandList):
     @staticmethod"""
     def totalExecutor(commandList):
-        print("total...")
+        print("totaling...")
         sql = f"""
             SELECT SUM(amount) FROM {commandList[0]}
             """
-        records = Database.query(sql)
-        for record in records:
-            print(record)
+        try:
+            records = Database.query(sql)
+            for record in records:
+                print(record)
+        except Exception as e:
+            print(e)
     """@staticmethod
     def searchExecutor(commandList):"""
     @staticmethod
