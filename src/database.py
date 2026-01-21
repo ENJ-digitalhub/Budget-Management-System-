@@ -3,10 +3,20 @@ import os
 import time
 
 class Database:
-    # Flag to track if database is already initialized
-    is_initialized = False
-    @staticmethod
-    def connect():
+    def __init__(self):
+        # Flag to track if database is already initialized
+        self.is_initialized = False
+        conn = self.connect()
+        if conn:
+            try:
+                self.create_all_tables(conn)
+                self.is_initialized = True
+            except sqlite3.Error as e:
+                print("Database setup failed")
+                print(e)
+            finally:
+                conn.close()
+    def connect(self):
         conn = None
         max_retries = 5
         retry_delay = 1  # seconds
@@ -15,14 +25,14 @@ class Database:
         base_dir = os.path.dirname(os.path.abspath(__file__))  # __file__ is src/database.py
         project_dir = os.path.dirname(base_dir)   
         # Ensure data folder exists
-        data_dir = os.path.join(project_dir, "data")
+        data_dir = os.path.join(project_dir,"data")
         if not os.path.exists(data_dir):
             os.makedirs(data_dir)
             print("Created data folder for database storage")
 
-        db_path = os.path.join(data_dir, "budget.db")
+        db_path = os.path.join(data_dir,"budget.db")
 
-        for attempt in range(1, max_retries + 1):
+        for attempt in range(1,max_retries + 1):
             try:
                 conn = sqlite3.connect(
                     db_path,
@@ -40,8 +50,8 @@ class Database:
                 conn.commit()
 
                 # Check tables on first connection
-                if not Database.is_initialized:
-                    Database.check_if_tables_exist(conn)
+                if not self.is_initialized:
+                    self.check_if_tables_exist(conn)
 
                 print(f"Connected to database successfully (attempt {attempt})")
                 return conn
@@ -60,8 +70,7 @@ class Database:
                     print(f"Failed to connect after {max_retries} attempts")
 
         return None
-    @staticmethod
-    def check_if_tables_exist(conn):
+    def check_if_tables_exist(self,conn):
         try:
             cursor = conn.cursor()
             cursor.execute("""
@@ -73,34 +82,21 @@ class Database:
 
             if count == 0:
                 print("Tables not found - creating them now...")
-                Database.create_all_tables(conn)
+                self.create_all_tables(conn)
             else:
                 print("Database tables are ready")
 
-            Database.is_initialized = True
+            self.is_initialized = True
 
         except sqlite3.Error as e:
             print(f"Error checking for tables: {e}")
             try:
                 print("Trying to create tables...")
-                Database.create_all_tables(conn)
-                Database.is_initialized = True
+                self.create_all_tables(conn)
+                self.is_initialized = True
             except sqlite3.Error as e2:
-                print(f"Could not create tables: {e2}")
-    @staticmethod
-    def init():
-        conn = Database.connect()
-        if conn:
-            try:
-                Database.create_all_tables(conn)
-                Database.is_initialized = True
-            except sqlite3.Error as e:
-                print("Database setup failed")
-                print(e)
-            finally:
-                conn.close()
-    @staticmethod
-    def create_all_tables(conn):
+                print(f"Could not create tables: {e2}")    
+    def create_all_tables(self,conn):
         cursor = conn.cursor()
         users_table = """
         CREATE TABLE IF NOT EXISTS users (
@@ -116,7 +112,7 @@ class Database:
         allowance_table = """
         CREATE TABLE IF NOT EXISTS allowance (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
-            record_date DATE NOT NULL DEFAULT CURRENT_DATE,
+            record_date DATE UNIQUE NOT NULL DEFAULT CURRENT_DATE,
             amount REAL NOT NULL,
             created_at TIME DEFAULT CURRENT_TIME
         );
@@ -126,7 +122,7 @@ class Database:
         CREATE TABLE IF NOT EXISTS expenses (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
             allowance_id INTEGER,
-            label TEXT DEFAULT NULL,                -- e.g. "Bus fare", "Lunch", "Netflix"
+            label TEXT DEFAULT NULL,             -- e.g. "Bus fare","Lunch","Netflix"
             amount REAL NOT NULL,
             created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
             FOREIGN KEY (allowance_id) REFERENCES allowance(id)
@@ -137,7 +133,7 @@ class Database:
         CREATE TABLE IF NOT EXISTS income (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
             allowance_id INTEGER,
-            label TEXT DEFAULT NULL,   -- allowance top-up, profit, gift
+            label TEXT DEFAULT NULL,-- allowance top-up,profit,gift
             amount REAL NOT NULL,
             created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
             FOREIGN KEY (allowance_id) REFERENCES allowance(id)
@@ -157,7 +153,7 @@ class Database:
         transactions_table = """
         CREATE TABLE IF NOT EXISTS transactions (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
-            type TEXT NOT NULL,     -- debt or credit
+            type TEXT NOT NULL,  -- debt or credit
             person TEXT,
             amount REAL NOT NULL,
             date DATE,
@@ -174,37 +170,33 @@ class Database:
         conn.commit()
 
         print("All database tables created successfully")
-    @staticmethod
-    def is_database_ready():
-        return Database.is_initialized
-    @staticmethod
-    def run(sql, params=None):
-        conn = Database.connect()  # uses your robust connect() method
+    def is_database_ready(self):
+        return self.is_initialized
+    def run(self,sql,params=None):
+        conn = self.connect()  # uses your robust connect() method
         if not conn:
             print("Database connection failed. Cannot execute SQL.")
             return
         try:
             cursor = conn.cursor()
             if params:
-                cursor.execute(sql, params)
+                cursor.execute(sql,params)
             else:
                 cursor.execute(sql)
             conn.commit()
         finally:
             conn.close()
-    @staticmethod
-    def query(sql, params=None):
-        conn = Database.connect()  # uses your robust connect() method
+    def query(self,sql,params=None):
+        conn = self.connect()  # uses your robust connect() method
         if not conn:
             print("Database connection failed. Cannot execute SQL.")
             return
         try:
             cursor = conn.cursor()
             if params:
-                cursor.execute(sql, params)
+                cursor.execute(sql,params)
             else:
                 cursor.execute(sql)
-            conn.commit()
         finally:
             rows = tuple(cursor.fetchall())
             conn.close()

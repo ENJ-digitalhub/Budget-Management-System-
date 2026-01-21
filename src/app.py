@@ -1,33 +1,42 @@
-from user import User
-from utils import Utils as tools
-from commands import Commands as cmds
+import user
+import help
+import utils
+import commands
 
 class Main:
-    def startupPage():
-        tools.cls()
-        tools.center("Budget CLI",60)
-        option = int(input("1.Login\n2.Register\n3.Exit\nOption: "))
+    def __init__(self):
+        self.user=user.User()
+        self.help=help.Help()
+        self.tools=utils.Utils()
+        self.cmds=commands.Commands()
+        self.command = ""
+    def startupPage(self):
+        self.tools.cls()
+        self.tools.center("Budget CLI",60)
+        option = int(input("1.Login\n2.Register\n3.end\nOption: "))
         match option:
             case 1:
-                User.login(Main.startupPage, Main.homePage)
+                self.user.login(self.startupPage,self.homePage)
             case 2:
-                User.register(Main.startupPage, Main.homePage)
+                self.user.register(self.startupPage,self.homePage)
             case 3:
-                tools.exit()
+                self.tools.end()
             case _:
                 print("No match\nPress ENTER to continue...")
                 input()
-                startupPage()
+                self.startupPage()
         pass
-    def homePage():
-        tools.cls()
+    def homePage(self):
+        self.tools.cls()
         print("--- Home ---")
-        command = ""
         while True:
             command = str(input("\n~~~ ").strip().lower())
             if command == "quit":
-                tools.exit()
+                self.tools.end()
                 break
+            elif command == "help":
+                self.help.helpMessage()
             else:
-                cmds.executeCommand(command)
-Main.homePage()
+                self.cmds.executeCommand(command)
+m=Main()
+m.homePage()
