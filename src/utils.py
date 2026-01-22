@@ -1,12 +1,15 @@
 import os
+import config
 import platform
 
 class Utils:
 	def __init__(self):
 		self.isConfirm=False
+		self.config = config.Config()
+		self.terminal_width = self.config.get('display.terminal_width', 60)
 	def center(self,string,width):
-		padding = int((width-len(string))/2)
-		return " "*padding+string+" "*padding
+		padding = int((self.terminal_width - len(string)) / 2)
+		return " " * padding + string + " " * padding
 	def cls(self):
 		try:
 			if platform.system().lower().startswith("win"):

@@ -12,9 +12,9 @@ class Main:
 		self.command = ""
 	def startupPage(self):
 		self.tools.cls()
-		print("="*60)
-		print(self.tools.center("Budget CLI", 60))
-		print("="*60)
+			print("=" * self.tools.terminal_width)
+			print(self.tools.center("Budget CLI"))
+			print("=" * self.tools.terminal_width)
 		
 		print("1. Login")
 		print("2. Register")

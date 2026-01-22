@@ -1,10 +1,12 @@
 import sqlite3
 import os
 import time
+import config
 
 class Database:
 	def __init__(self, username=None):
-		# Flag to track if database is already initialized
+		self.config = config.Config()
+		self.data_dir = self.config.get('database.user_data_directory', 'data/')
 		self.is_initialized = False
 		self.current_username = username
 		
