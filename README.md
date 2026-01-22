@@ -49,8 +49,6 @@ Inspired by real-life daily budgeting records, BudgetCLI replaces complex spread
 
 ### 🔹 Configuration
 - JSON-based settings file
-- Default budgets and contribution values
-- Configurable currency symbol
 
 ### 🔹 Data Persistence
 - SQLite database for all financial records
@@ -96,60 +94,19 @@ BudgetCLI/
 
 ## 🚀 Example Commands
 
-day start 2025-08-04
-allowance set 2500
-budget transport 1500
-budget diet 200
-spend transport 1000
-spend diet 300
-income add "SIR HUMBLE" 1300
-expense add "Airtime" 300
-contribution set 500
-day summary
-
-
----
-
-## 📊 Sample Daily Summary Output
-
-**DATE:** Monday, August 4, 2025
-
-**Allowance:** ₦2,500
-
-**Transport:**
-  **Budget:** ₦1,500
-  **Paid:** ₦1,000
-  **Balance:** ₦500
-
-**Diet:**
-  **Budget:** ₦200
-  **Spent:** ₦300
-  **Balance:** -₦100
-
-**Extra Income:**
-  **SIR HUMBLE:** ₦1,300
-
-**Extra Expenses:**
-  **Airtime:** ₦300
-
-**Contribution:** ₦500
-
-**NET TOTAL:** ₦2,000
-
+allowance add <amount>
+allowance show
+expenses remove <id>
+income modify <id> <amount> <label>
+savings total <YYYY-MM>
 
 ---
 
 ## ⚙ Configuration (settings.json)
 
 {
-  "currency": "₦",
-  "dailyContribution": 500,
-  "defaultBudgets": {
-    "transport": 1500,
-    "diet": 200
-  },
   "database": {
-    "path": "data/budget.db"
+    "path": "data/<username>/budget.db"
   }
 }
 
@@ -174,7 +131,7 @@ Per-user data directory
 data/<username>/budget.db
 ```
 
-Automatic DB initialization (LazyMan)
+Automatic DB initialization
 
 Daily budgeting
 
@@ -205,6 +162,8 @@ Read-only history navigation improvements
 **Goal:** Advanced insights and multiple users
 
 #### Features
+
+Migration to GUI
 
 Advanced analytics
 
