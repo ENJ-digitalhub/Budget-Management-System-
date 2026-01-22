@@ -13,7 +13,7 @@ class Main:
 	def startupPage(self):
 		self.tools.cls()
 		print("=" * self.tools.terminal_width)
-		print(self.tools.center("Budget CLI"))
+		print(self.tools.center("Budget CLI",self.tools.terminal_width))
 		print("=" * self.tools.terminal_width)
 		
 		print("1. Login")
