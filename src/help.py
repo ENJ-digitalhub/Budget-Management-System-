@@ -93,7 +93,6 @@ class Help:
 		print("  • help		   - Show quick help")
 		print("  • help detailed  - Show detailed documentation")
 		print("  • quit		   - Exit the application")
-		print("  • logout		   - Exit user's account")
 		
 		print("\n" + "="*60)
 		print("TIP: Check database structure in database.py for details")
