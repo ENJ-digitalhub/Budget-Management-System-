@@ -98,17 +98,6 @@ class Database:
                 print(f"Could not create tables: {e2}")    
     def create_all_tables(self,conn):
         cursor = conn.cursor()
-        users_table = """
-        CREATE TABLE IF NOT EXISTS users (
-            user_id INTEGER PRIMARY KEY AUTOINCREMENT,
-            firstname TEXT NOT NULL,
-            lastname TEXT NOT NULL,
-            username TEXT UNIQUE NOT NULL,
-            pin TEXT NOT NULL,
-            created_at TEXT DEFAULT CURRENT_TIMESTAMP
-        );
-        """
-        
         allowance_table = """
         CREATE TABLE IF NOT EXISTS allowance (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -160,8 +149,6 @@ class Database:
             settled INTEGER DEFAULT 0
         );
         """
-
-        cursor.execute(users_table)
         cursor.execute(allowance_table)
         cursor.execute(expenses_table)
         cursor.execute(income_table)

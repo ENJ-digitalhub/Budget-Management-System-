@@ -20,19 +20,19 @@ class Utils:
         self.cls()
         print("Closing Program...")
     def confirm(self,object):
-        Utils.cls()
+        self.cls()
         confirm = str(input("Confirm \""+object+"\" (y/n)? "))
         if confirm.lower() == "y":
             self.cls()
             print("Confirmed...")
             self.isConfirm = True
         elif confirm.lower() == "n":
-            Utils.cls()
+            self.cls()
             print("...")
         else:
-            cls
+            self.cls()
             print("Invaild Input...")
-            Utils.confirm(object)
+            self.confirm(object)
         pass
     def encrypt(self,pin: str) -> str:
         if len(pin) != 4:
