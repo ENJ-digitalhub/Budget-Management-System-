@@ -2,9 +2,11 @@ import user
 import help
 import utils
 import commands
+from datetime import datetime
 
 class Main:
 	def __init__(self):
+		self.now = datetime.now()
 		self.user = user.User()
 		self.help = help.Help()
 		self.tools = utils.Utils()
@@ -12,8 +14,14 @@ class Main:
 		self.command = ""
 	def startupPage(self):
 		self.tools.cls()
+		#print("\n")
 		print("=" * self.tools.terminal_width)
+		#print("\n")
 		print(self.tools.center("Budget CLI",self.tools.terminal_width))
+		date_time ="Date: " + self.now.strftime("%Y-%m-%d")+" \t Time: " + self.now.strftime("%H:%M:%S") 
+		#print("\n")
+		print(self.tools.center(date_time,self.tools.terminal_width))
+		#print("\n")
 		print("=" * self.tools.terminal_width)
 		
 		print("1. Login")
