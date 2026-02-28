@@ -1,5 +1,6 @@
 import utils
 import database  
+import getpass
 
 class User:
 	def __init__(self):
@@ -27,11 +28,11 @@ class User:
 		# Validate PIN
 		pin = ""
 		while len(pin) != 4 or not pin.isdigit():
-			pin = str(input("4-digit PIN: "))
+			pin = getpass.getpass("Set 4-digit PIN: ")
 			if len(pin) != 4 or not pin.isdigit():
 				print("PIN must be exactly 4 digits!")
 		
-		confirm_pin = str(input("Confirm PIN: "))
+		confirm_pin = getpass.getpass("Confirm PIN: ")
 		if pin != confirm_pin:
 			print("PINs do not match!")
 			input("Press ENTER to try again...")
@@ -96,7 +97,7 @@ class User:
 		print("--- Login ---")
 		
 		username = str(input("Username: ")).lower()
-		pin = str(input("4-digit PIN: "))
+		pin = getpass.getpass("4-digit PIN: ")
 		
 		# Validate PIN
 		if len(pin) != 4 or not pin.isdigit():

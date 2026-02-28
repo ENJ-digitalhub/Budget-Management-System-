@@ -1,5 +1,6 @@
 import sqlite3
-import database  
+import database
+from datetime import datetime
 
 class Commands:
 	def __init__(self, db=None):
@@ -14,11 +15,11 @@ class Commands:
 								"remove":self.removeExecutor,\
 								"modify":self.modifyExecutor,\
 								"show":self.showExecutor,\
-								"total":self.totalExecutor}
+								"total":self.totalExecutor, \
+								"search":self.searchExecutor}
 	def commandParser(self,command):
 		self.command= command
 		return self.command.split(" ")
-		pass
 	def isValid(self,commandList):
 		self.commandList=commandList
 		while len(self.commandList) != 5:
@@ -45,7 +46,7 @@ class Commands:
 		params2 = (self.commandList[2],self.commandList[3])
 		try:
 			self.db.run(sql2,params2)
-		except sqlite3.OperationalError:
+		except Exception:
 			try:
 				self.db.run(sql,params)
 			except Exception as e:
@@ -120,28 +121,18 @@ class Commands:
 				print("(No records found...)")
 		except Exception as e:
 			print(e)
-	"""
-	def statusExecutor(commandList):
-	
-	def historyExecutor(commandList):
-	
-	def previousExecutor(commandList):
-	
-	def nextExecutor(commandList):
-	"""
 	def totalExecutor(self,commandList):
-		self.commandList=commandList
 		print("totaling...")
 		sql = f"""
 			SELECT SUM(amount) FROM {self.commandList[0]}
 			"""
 		sql2 = f"""
 			SELECT SUM(amount) FROM {self.commandList[0]}
-			WHERE SUBSTR(created_at, 1, 7) = (?)
+			WHERE SUBSTR (created_at, 1, LENGTH(?)) = (?)
 			"""
 		sql3 = f"""
 			SELECT SUM(amount) FROM {self.commandList[0]}
-			WHERE SUBSTR(record_date, 1, 7) = (?)
+			WHERE SUBSTR (record_date, 1, LENGTH(?)) = (?)
 			"""
 		try:
 			if self.commandList[2]=="":
@@ -151,19 +142,59 @@ class Commands:
 			else:
 				try:
 					if self.commandList[0] != "allowance":
-						records = self.db.query(sql2, (self.commandList[2],))
+						records = self.db.query(sql2, (self.commandList[2],self.commandList[2],))
 						for record in records:
 							print(record)
 					else:
-						records = self.db.query(sql3, (self.commandList[2],))
+						records = self.db.query(sql3, (self.commandList[2],self.commandList[2],))
 						for record in records:
 							print(record)
 				except Exception as e:
 					print(e)
 		except Exception as e:
 					print(e)
-	"""
-	def searchExecutor(commandList):"""
+	def statusExecutor(self, date= datetime.now().strftime("%Y-%m-%d")):
+		print("calculating...")
+		sql = f"""
+			SELECT ((SELECT SUM(amount) FROM allowance WHERE SUBSTR (record_date, 1, LENGTH(?)) = (?))+
+			(SELECT COALESCE(SUM(amount), 0)  FROM income WHERE SUBSTR (created_at, 1, LENGTH(?)) = (?)))-
+			((SELECT COALESCE(SUM(amount), 0)  FROM expenses WHERE SUBSTR (created_at, 1, LENGTH(?)) = (?))+
+			(SELECT COALESCE(SUM(amount), 0)  FROM savings WHERE SUBSTR (created_at, 1, LENGTH(?)) = (?))) As status
+			"""
+		try:
+			records = self.db.query(sql, (date, date, date, date, date, date, date, date, ))
+			for record in records:
+				print(record)
+		except Exception as e:
+			print(e)		
+	def searchExecutor(self, commandList):
+		self.commandList=commandList
+		print("searching...")
+		sql = f"""
+			SELECT * FROM {self.commandList[0]}
+			WHERE label LIKE (?)
+			"""
+		try:
+			records = self.db.query(sql, (f"%{self.commandList[2]}%",))
+			i=0
+			for record in records:
+				print(record)
+				i+=1
+			if i == 0:
+				print("(No records found...)")
+			elif i == 1:
+				print(f"\n{i} record found...")
+			else:
+				print(f"\n{i} records found...")
+		except Exception as e:
+			print(e)
 	def executeCommand(self,command):
 		self.command=command
 		self.isValid(self.commandParser(self.command))
+	"""
+	def historyExecutor(commandList):
+	
+	def previousExecutor(commandList):
+	
+	def nextExecutor(commandList):
+	"""

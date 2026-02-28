@@ -6,11 +6,10 @@ from datetime import datetime
 
 class Main:
 	def __init__(self):
-		self.now = datetime.now()
 		self.user = user.User()
 		self.help = help.Help()
 		self.tools = utils.Utils()
-		self.cmds = None
+		self.cmds = commands.Commands()
 		self.command = ""
 	def startupPage(self):
 		self.tools.cls()
@@ -18,7 +17,7 @@ class Main:
 		print("=" * self.tools.terminal_width)
 		#print("\n")
 		print(self.tools.center("Budget CLI",self.tools.terminal_width))
-		date_time ="Date: " + self.now.strftime("%Y-%m-%d")+" \t Time: " + self.now.strftime("%H:%M:%S") 
+		date_time ="Date: " + datetime.now().strftime("%Y-%m-%d")+" \t Time: " + datetime.now().strftime("%H:%M:%S") 
 		#print("\n")
 		print(self.tools.center(date_time,self.tools.terminal_width))
 		#print("\n")
@@ -86,6 +85,11 @@ class Main:
 				self.help.helpMessage()
 			elif self.command == "help detailed":
 				self.help.detailedHelp()
+			elif self.command.split(" ")[0] == "status":
+				if len(self.command.split(" ")) > 1:
+					self.cmds.statusExecutor(date=self.command.split(" ")[1])
+				else:
+					self.cmds.statusExecutor()
 			else:
 				if self.cmds:
 					self.cmds.executeCommand(command)

@@ -16,6 +16,8 @@ class Help:
 		print("  expenses modify 3 20 'Dinner'")
 		print("  expenses show")
 		print("  expenses total 2024-12")
+		print("  expenses total 2024-12-05")
+		print("	allowance search transport")
 		
 		print("\nType 'help detailed' for full documentation")
 		print("="*50 + "\n")
@@ -27,6 +29,7 @@ class Help:
 		print("\nCOMMAND FORMAT:")
 		print("  [category] [action] [id] [amount] [label]")
 		print("  • For total: [category] total [YYYY-MM]")
+		print("  • For search: [category] search [label]")
 		
 		print("\nCATEGORIES:")
 		print("  • allowance   - Daily/weekly/monthly allowance")
@@ -40,6 +43,7 @@ class Help:
 		print("  • modify  - Modify a record by ID")
 		print("  • show	- Show all records")
 		print("  • total   - Calculate totals (optionally by month)")
+		print("  • search   - Find records via label")
 		
 		print("\nEXAMPLES:")
 		print("  1. Add a new allowance:")
@@ -75,6 +79,10 @@ class Help:
 		print("	 allowance total")
 		print("	 income total 2024-12	(for December 2024)")
 		print("	 savings total 2024-11   (for November 2024)")
+
+		print("\n  9. Search labels:")
+		print("	 expenses search snacks")
+		print("	 allowance search transport")
 		
 		print("\nDATABASE RELATIONSHIPS:")
 		print("  • Expenses, Income, and Savings are linked to Allowance")
@@ -94,6 +102,8 @@ class Help:
 		print("  • help detailed  - Show detailed documentation")
 		print("  • quit		   - Exit the application")
 		print("  • logout		   - Exit user's account")
+		print("  • status		   - shows current balance")
+		print("  • status [yyyy-MM-dd || yyyy-MM || yyyy]		   - shows earnings of the specified date")
 		
 		print("\n" + "="*60)
 		print("TIP: Check database structure in database.py for details")

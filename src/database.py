@@ -69,7 +69,7 @@ class Database:
 				cursor.execute("PRAGMA foreign_keys = ON;")
 				conn.commit()
 
-				print(f"Connected to {username}'s budget database (attempt {attempt})")
+				print(f"[Notification] Connected to {username}'s budget database (attempt {attempt})")
 				return conn
 
 			except sqlite3.Error as e:
@@ -257,8 +257,8 @@ class Database:
 				cursor.execute(sql)
 			conn.commit()
 		except sqlite3.Error as e:
-			print(f"Database error: {e}")
 			conn.rollback()
+			raise e
 		finally:
 			conn.close()
 	def query(self, sql, params=None):
