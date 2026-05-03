@@ -90,6 +90,11 @@ class Main:
 					self.cmds.statusExecutor(date=self.command.split(" ")[1])
 				else:
 					self.cmds.statusExecutor()
+			elif self.command.split(" ")[0] == "report":
+				if len(self.command.split(" ")) > 1:
+					self.cmds.reportExecutor(date=self.command.split(" ")[1])
+				else:
+					self.cmds.reportExecutor()
 			else:
 				if self.cmds:
 					self.cmds.executeCommand(command)

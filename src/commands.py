@@ -188,9 +188,26 @@ class Commands:
 				print(f"\n{i} records found...")
 		except Exception as e:
 			print(e)
+	def reportExecutor(self, date = datetime.now().strftime("%Y-%m-%d")):
+		# print(self.commandList)
+		print("---Allowance---")
+		self.commandList=["allowance","total",date]
+		self.totalExecutor(self.commandList)
+		print("---Expenses---")
+		self.commandList=["expenses","total",date]
+		self.totalExecutor(self.commandList)
+		print("---Income---")
+		self.commandList=["income","total",date]
+		self.totalExecutor(self.commandList)
+		print("---Savings---")
+		self.commandList=["savings","total",date]
+		self.totalExecutor(self.commandList)
+		print("---Total---")
+		self.statusExecutor(date)
 	def executeCommand(self,command):
 		self.command=command
 		self.isValid(self.commandParser(self.command))
+		
 	"""
 	def historyExecutor(commandList):
 	

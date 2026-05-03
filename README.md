@@ -115,7 +115,7 @@ savings total <YYYY-MM>
 
 ## 🧩 Version Roadmap
 
-### 🚀 v1.0 — Single User, Secure, Daily Use (FOUNDATION)
+### 🚀 v1.0.0 — Single User, Secure, Daily Use (FOUNDATION)
 
 **Goal:** A usable, safe, daily budgeting tool for one user at a time
 
@@ -143,13 +143,13 @@ Daily summary reports
 
 ✔️ This version already feels complete and real
 
-### 🔧 v1.5 — Productivity & Portability
+### 🔧 v2.0.0 — Productivity & Portability
 
 **Goal:** Make data easier to review and move
 
 #### Features
 
-Monthly summaries
+Monthly summaries [v1.1.0]
 
 CSV export
 
@@ -157,7 +157,7 @@ Backup & restore
 
 Read-only history navigation improvements
 
-### 🌐 v2.0 — Power User & Scale
+### 🌐 v3.0.0 — Power User & Scale
 
 **Goal:** Advanced insights and multiple users
 

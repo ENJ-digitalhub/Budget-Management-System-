@@ -15,9 +15,11 @@ class Help:
 		print("  expenses remove 5")
 		print("  expenses modify 3 20 'Dinner'")
 		print("  expenses show")
-		print("  expenses total 2024-12")
-		print("  expenses total 2024-12-05")
-		print("	allowance search transport")
+		print("  expenses total 2026-12")
+		print("  expenses total 2026-12-05")
+		print("  expenses status 2026-12-05")
+		print("  allowance search transport")
+		print("	 report 2026-02 (for Febuary 2026")
 		
 		print("\nType 'help detailed' for full documentation")
 		print("="*50 + "\n")
@@ -29,7 +31,9 @@ class Help:
 		print("\nCOMMAND FORMAT:")
 		print("  [category] [action] [id] [amount] [label]")
 		print("  • For total: [category] total [YYYY-MM]")
+		print("  • For status: [category] status [YYYY-MM-DD]")
 		print("  • For search: [category] search [label]")
+		print("  • For report: report [YYYY-MM]")
 		
 		print("\nCATEGORIES:")
 		print("  • allowance   - Daily/weekly/monthly allowance")
@@ -43,7 +47,9 @@ class Help:
 		print("  • modify  - Modify a record by ID")
 		print("  • show	- Show all records")
 		print("  • total   - Calculate totals (optionally by month)")
+		print("  • status   - Shows balance")
 		print("  • search   - Find records via label")
+		print("  • report   - Shows record summary")
 		
 		print("\nEXAMPLES:")
 		print("  1. Add a new allowance:")
@@ -77,12 +83,20 @@ class Help:
 		print("\n  8. Calculate totals:")
 		print("	 expenses total")
 		print("	 allowance total")
-		print("	 income total 2024-12	(for December 2024)")
-		print("	 savings total 2024-11   (for November 2024)")
+		print("	 income total 2026-12	(for December 2026)")
+		print("	 savings total 2026-11   (for November 2026)")
+		
+		print("\n  9. Check status:")
+		print("	 status 2026-02 (for Febuary 2026")
+		print("	 status 2026")
 
-		print("\n  9. Search labels:")
+		print("\n  10. Search labels:")
 		print("	 expenses search snacks")
 		print("	 allowance search transport")
+  
+		print("\n  11. Monthly reports:")
+		print("	 report 2026-02 (for Febuary 2026")
+		print("	 report 2026")
 		
 		print("\nDATABASE RELATIONSHIPS:")
 		print("  • Expenses, Income, and Savings are linked to Allowance")
@@ -93,7 +107,7 @@ class Help:
 		print("  • ID parameter is required for remove/modify actions")
 		print("  • Amount must be a number")
 		print("  • Label is optional for most operations(except allowance and savings)")
-		print("  • Month format for totals: YYYY-MM (e.g., 2024-12)")
+		print("  • Month format for totals: YYYY-MM (e.g., 2026-12)")
 		print("  • Dates are automatically recorded")
 		print("  • Commands are case-insensitive")
 		
@@ -102,8 +116,6 @@ class Help:
 		print("  • help detailed  - Show detailed documentation")
 		print("  • quit		   - Exit the application")
 		print("  • logout		   - Exit user's account")
-		print("  • status		   - shows current balance")
-		print("  • status [yyyy-MM-dd || yyyy-MM || yyyy]		   - shows earnings of the specified date")
 		
 		print("\n" + "="*60)
 		print("TIP: Check database structure in database.py for details")
