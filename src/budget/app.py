@@ -16,7 +16,7 @@ class Main:
 		#print("\n")
 		print("=" * self.tools.terminal_width)
 		#print("\n")
-		print(self.tools.center("ENJ0Y Budget CLI | v1.2.1",self.tools.terminal_width))
+		print(self.tools.center("ENJ0Y Budget CLI | v1.3.0",self.tools.terminal_width))
 		date_time ="Date: " + datetime.now().strftime("%Y-%m-%d")+" \t Time: " + datetime.now().strftime("%H:%M:%S") 
 		#print("\n")
 		print(self.tools.center(date_time,self.tools.terminal_width))

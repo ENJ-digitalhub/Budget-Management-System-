@@ -13,6 +13,7 @@ class Commands:
 		self.mainCommands=("allowance","expenses","income","savings")
 		self.typeCommands={"add":self.addExecutor,\
 								"remove":self.removeExecutor,\
+								"delete":self.deleteExecutor,\
 								"modify":self.modifyExecutor,\
 								"show":self.showExecutor,\
 								"total":self.totalExecutor, \
@@ -72,7 +73,48 @@ class Commands:
 				pass
 	def removeExecutor(self,commandList):
 		self.commandList=commandList
+		amount = self.commandList[2]
+		negative_amount = -float(amount)
 		print("removing...")
+		sql = f"""
+			INSERT INTO {self.commandList[0]} (amount)
+			VALUES (?)
+			"""
+		params = (negative_amount,)
+		sql2 = f"""
+			INSERT INTO {self.commandList[0]} (amount,label)
+			VALUES (?,?)
+			"""
+		params2 = (negative_amount,self.commandList[3])
+		try:
+			self.db.run(sql2,params2)
+		except Exception:
+			try:
+				self.db.run(sql,params)
+			except Exception as e:
+				print(e)
+		finally:
+			if self.commandList[0] != "allowance":
+				foriegn_key_sql = f"""
+					UPDATE {self.commandList[0]}
+					SET allowance_id = (
+						SELECT id 
+						FROM allowance 
+						WHERE SUBSTR({self.commandList[0]}.created_at, 1, 10) = allowance.record_date
+						LIMIT 1
+					)
+					WHERE EXISTS (
+						SELECT 1
+						FROM allowance 
+						WHERE SUBSTR({self.commandList[0]}.created_at, 1, 10) = allowance.record_date
+					);
+				"""
+				self.db.run(foriegn_key_sql)
+			else:
+				pass
+	def deleteExecutor(self,commandList):
+		self.commandList=commandList
+		print("deleting...")
 		sql = f"""
 			DELETE FROM {self.commandList[0]} 
 			WHERE id = (?)

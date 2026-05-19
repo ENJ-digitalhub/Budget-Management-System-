@@ -67,6 +67,23 @@ This version restructures how the application starts and runs, making the system
 
 ---
 
+### v1.3.0 – Delete Function & Remove Function Adjustment Integration
+
+This version introduces data deletion capabilities and improves the logic behind the remove functionality for better accuracy and control.
+
+**Features:**
+- Added delete function for removing specific records from the system
+- Improved remove function behavior for more precise data handling
+- Enhanced validation to prevent accidental or invalid deletions
+- Fixed inconsistencies between "remove" and "delete" command logic
+- Improved internal data update flow after deletions
+- Strengthened safety checks before destructive operations
+
+**Summary:**
+This update introduces controlled data removal capabilities and refines existing removal logic. It ensures that data deletion is intentional, consistent, and safer across the system while maintaining system stability.
+
+---
+
 ## Versioning Philosophy
 
 This project follows a structured evolution approach:
