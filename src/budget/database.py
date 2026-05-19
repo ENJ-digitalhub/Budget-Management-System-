@@ -1,7 +1,7 @@
 import sqlite3
 import os
 import time
-import config
+import budget.config as config
 
 class Database:
 	def __init__(self, username=None):

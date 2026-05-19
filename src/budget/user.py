@@ -1,5 +1,5 @@
-import utils
-import database  
+import budget.utils as utils
+import budget.database as database  
 import getpass
 
 class User:

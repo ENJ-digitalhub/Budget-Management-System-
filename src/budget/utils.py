@@ -1,5 +1,5 @@
 import os
-import config
+import budget.config as config
 import platform
 
 class Utils:

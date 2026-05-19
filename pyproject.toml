@@ -1,0 +1,10 @@
+[project]
+name = "enj0y-budget-cli"
+version = "1.2.0"
+description =  "A CLI tool for managing personal budget"
+authors = [
+    {name = "ENJ_digitalhub", email = "ekwerenoble2@gmail.com"}
+]
+
+[project.scripts]
+enj0y-budget = "budget.app:main"

@@ -1,5 +1,5 @@
 import sqlite3
-import database
+import budget.database as database
 from datetime import datetime
 
 class Commands:
