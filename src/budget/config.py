@@ -2,14 +2,14 @@ import json
 import os
 
 class Config:
-	def __init__(self, config_path=None):
-		self.config_path = config_path or self._get_default_config_path()
+	def __init__(self):
+		self.config_path = self._get_default_config_path()
 		self.settings = self._load_config()
 		
 	def _get_default_config_path(self):
 		"""Get the default path to settings.json"""
 		base_dir = os.path.dirname(os.path.abspath(__file__))
-		project_dir = os.path.dirname(base_dir)
+		project_dir = os.path.dirname(os.path.dirname(base_dir))
 		return os.path.join(project_dir, "config", "settings.json")
 	
 	def _load_config(self):
@@ -17,6 +17,7 @@ class Config:
 		try:
 			if os.path.exists(self.config_path):
 				with open(self.config_path, 'r') as f:
+					print(f"Loaded config from {self.config_path}")
 					return json.load(f)
 			else:
 				# Return default config if file doesn't exist

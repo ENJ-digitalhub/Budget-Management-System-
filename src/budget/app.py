@@ -2,6 +2,7 @@ import budget.user as user
 import budget.help as help
 import budget.utils as utils
 import budget.commands as commands
+import budget.config as config
 from datetime import datetime
 
 class Main:
@@ -10,13 +11,18 @@ class Main:
 		self.help = help.Help()
 		self.tools = utils.Utils()
 		self.cmds = commands.Commands()
+		self.config = config.Config()
 		self.command = ""
 	def startupPage(self):
 		self.tools.cls()
+		self.cmds = None  # Reset commands when returning to startup page
 		#print("\n")
 		print("=" * self.tools.terminal_width)
 		#print("\n")
-		print(self.tools.center("ENJ0Y Budget CLI | v1.3.0",self.tools.terminal_width))
+		name = self.config.get("application.name")
+		version = self.config.get("version")
+		title = f"{name} | v{version}"
+		print(self.tools.center(title, self.tools.terminal_width))
 		date_time ="Date: " + datetime.now().strftime("%Y-%m-%d")+" \t Time: " + datetime.now().strftime("%H:%M:%S") 
 		#print("\n")
 		print(self.tools.center(date_time,self.tools.terminal_width))
