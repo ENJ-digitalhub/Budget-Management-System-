@@ -8,6 +8,7 @@ src/budget/database.py
 src/budget/help.py
 src/budget/user.py
 src/budget/utils.py
+src/budget/validator.py
 src/enj0y_budget_cli.egg-info/PKG-INFO
 src/enj0y_budget_cli.egg-info/SOURCES.txt
 src/enj0y_budget_cli.egg-info/dependency_links.txt

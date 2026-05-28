@@ -21,7 +21,7 @@ class Utils:
 				print()
 	def end(self):
 		self.cls()
-		print("Goodbye, Thanks for using ENJOY Budget Managment System. \nClosing Program...")
+		print("Goodbye, Thanks for using ENJ0Y Budget Managment System. \nClosing Program...")
 	def confirm(self,object):
 		self.cls()
 		confirm = str(input("Confirm \""+object+"\" (y/n)? "))

@@ -69,7 +69,7 @@ class Database:
 				cursor.execute("PRAGMA foreign_keys = ON;")
 				conn.commit()
 
-				print(f"[Notification] Connected to {username}'s budget database (attempt {attempt})")
+				print(f"Connected to {username}'s budget database (attempt {attempt})")
 				return conn
 
 			except sqlite3.Error as e:
@@ -256,8 +256,13 @@ class Database:
 			else:
 				cursor.execute(sql)
 			conn.commit()
+			status = cursor.rowcount
+			if int(status) == 0:
+				return False
+			else:
+				return True
 		except sqlite3.Error as e:
-			conn.rollback()
+			# print(f"Database error: {e}")
 			raise e
 		finally:
 			conn.close()
@@ -274,6 +279,7 @@ class Database:
 				cursor.execute(sql, params)
 			else:
 				cursor.execute(sql)
+			conn.commit()
 			rows = tuple(cursor.fetchall())
 			return rows
 		except sqlite3.Error as e:
@@ -281,6 +287,7 @@ class Database:
 			return ()
 		finally:
 			conn.close()
+   
 	# New methods for user management (to be used by user.py module)
 	def user_exists(self, username):
 		"""Check if a user exists in the central users database"""

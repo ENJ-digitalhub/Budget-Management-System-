@@ -1,8 +1,10 @@
 import budget.user as user
 import budget.help as help
 import budget.utils as utils
-import budget.commands as commands
+import budget.commands as cmd
+import budget.validator as check
 import budget.config as config
+import shlex
 from datetime import datetime
 
 class Main:
@@ -10,12 +12,13 @@ class Main:
 		self.user = user.User()
 		self.help = help.Help()
 		self.tools = utils.Utils()
-		self.cmds = commands.Commands()
+		self.cmd = cmd.Commands()
+		self.check = check.Validator()
 		self.config = config.Config()
 		self.command = ""
 	def startupPage(self):
 		self.tools.cls()
-		self.cmds = None  # Reset commands when returning to startup page
+		self.cmd = None  # Reset cmd when returning to startup page
 		#print("\n")
 		print("=" * self.tools.terminal_width)
 		#print("\n")
@@ -52,6 +55,7 @@ class Main:
 				print("Invalid option")
 				input("Press ENTER to continue...")
 				self.startupPage()
+    
 	def homePage(self):
 		if not self.user.get_current_user():
 			print("No user logged in. Redirecting to login...")
@@ -70,8 +74,8 @@ class Main:
 		self.tools.cls()
 		print(f"--- Home (Welcome {welcome_msg}) ---")
 		
-		# Initialize commands with user's database
-		self.cmds = commands.Commands(self.user.get_user_db())
+		# Initialize cmd with user's database
+		self.cmd = cmd.Commands(self.user.get_user_db())
 		
 		while True:
 			command = str(input("\n~~~ ").strip().lower())
@@ -91,21 +95,16 @@ class Main:
 				self.help.helpMessage()
 			elif self.command == "help detailed":
 				self.help.detailedHelp()
-			elif self.command.split(" ")[0] == "status":
-				if len(self.command.split(" ")) > 1:
-					self.cmds.statusExecutor(date=self.command.split(" ")[1])
-				else:
-					self.cmds.statusExecutor()
-			elif self.command.split(" ")[0] == "report":
-				if len(self.command.split(" ")) > 1:
-					self.cmds.reportExecutor(date=self.command.split(" ")[1])
-				else:
-					self.cmds.reportExecutor()
 			else:
-				if self.cmds:
-					self.cmds.executeCommand(command)
+				commandList = self.cmd.commandParser(self.command)
+				if(self.check.is_validated(commandList, self.cmd.statusExecutor)[0]):
+     				# Pad the command list to ensure it has at least 5 elements
+					commandList = commandList + [""] * (5 - len(commandList))  
+					result = self.cmd.executeCommand(commandList)
+					print(result)
 				else:
-					print("Command system not initialized. Please logout and login again.")
+					error = self.check.is_validated(commandList, self.cmd.statusExecutor)[1]
+					print(error)
 
 # Start the application
 def main():
