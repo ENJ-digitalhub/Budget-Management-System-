@@ -16,7 +16,11 @@ class Main:
 		self.check = check.Validator()
 		self.config = config.Config()
 		self.command = ""
+		self.logout = False
+		self.quit = False
+
 	def startupPage(self):
+		input("Press ENTER to continue...")
 		self.tools.cls()
 		self.cmd = None  # Reset cmd when returning to startup page
 		#print("\n")
@@ -39,30 +43,52 @@ class Main:
 		try:
 			option = int(input("Option: "))
 		except ValueError:
-			print("Invalid option. Please enter a number.")
-			input("Press ENTER to continue...")
-			self.startupPage()
-			return
+			return [False, "Invalid option. Please enter a number."]
 		
 		match option:
 			case 1:
-				self.user.login(self.startupPage, self.homePage)
+				login = self.user.login()
+				if login[0]:
+					print(login[1])
+					self.homePage()
+					return True
+				else:
+					print(login[1])
+					return True
 			case 2:
-				self.user.register(self.startupPage, self.homePage)
+				register = self.user.register()
+				if register[0]:
+					print(register[1])
+					login = self.user.login()
+					if login[0]:
+						print(login[1])
+						self.homePage()
+						return True
+					else:
+						print(login[1])
+						return True
+				else:
+					print(register[1])
+					return True
 			case 3:
-				self.tools.end()
+				self.quit = self.tools.end()
+				print (self.tools.end()[1])
 			case _:
-				print("Invalid option")
-				input("Press ENTER to continue...")
-				self.startupPage()
+				return [False, "Invalid option"]
     
 	def homePage(self):
+		input("Press ENTER to continue...")
 		if not self.user.get_current_user():
-			print("No user logged in. Redirecting to login...")
-			input("Press ENTER to continue...")
-			self.startupPage()
-			return
-		
+			login = self.user.login()
+			if login[0]:
+				print(login[1])
+				self.homePage()
+				return True
+			else:
+				print(login[1])
+				return True
+
+
 		# Get user info for display
 		user_info = self.user.get_user_info()
 		if user_info:
@@ -77,24 +103,27 @@ class Main:
 		# Initialize cmd with user's database
 		self.cmd = cmd.Commands(self.user.get_user_db())
 		
-		while True:
+		while not self.logout:
 			command = str(input("\n~~~ ").strip().lower())
 			self.command = command
 			
 			if self.command == "quit":
-				self.user.logout()
-				self.tools.end()
-				break
+				self.logout = self.user.logout()[0]
+				self.quit = self.tools.end()[0]
+				print (self.user.logout()[1])
+				print (self.tools.end()[1])
+
 			elif self.command == "logout":
-				self.user.logout()
-				print("Logged out. Returning to startup...")
-				input("Press ENTER to continue...")
+				self.logout = self.user.logout()[0]
+				print (self.user.logout()[1])
 				self.startupPage()
-				break
+
 			elif self.command == "help":
 				self.help.helpMessage()
+
 			elif self.command == "help detailed":
 				self.help.detailedHelp()
+
 			else:
 				commandList = self.cmd.commandParser(self.command)
 				if(self.check.is_validated(commandList, self.cmd.statusExecutor)[0]):
@@ -102,6 +131,7 @@ class Main:
 					commandList = commandList + [""] * (5 - len(commandList))  
 					result = self.cmd.executeCommand(commandList)
 					print(result)
+
 				else:
 					error = self.check.is_validated(commandList, self.cmd.statusExecutor)[1]
 					print(error)
@@ -109,4 +139,5 @@ class Main:
 # Start the application
 def main():
 	app = Main()
-	app.startupPage()
+	while not app.quit:
+		app.startupPage()

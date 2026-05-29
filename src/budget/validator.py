@@ -196,7 +196,7 @@ class Validator:
         
         # Try to convert the id to an integer and check if it is negative. If it is negative, print an error message and return False. If it is not a valid number, catch the ValueError and print an error message. If it is valid and not negative, return True.
         try:
-            if not re.fullmatch(r"^[1-9]?$", id):
+            if not re.fullmatch(r"^[0-9]+$", id):
                 raise ValueError
             id = int(id)
         except ValueError:

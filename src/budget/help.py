@@ -26,8 +26,8 @@ class Help:
 		print("  report 2026-02")
 
 		print("\nIMPORTANT:")
-		print("  • Labels must be alphanumeric (a-z, 0-9, _) only")
-		print("  • No spaces or quotes allowed in labels")
+		print("  • Labels must be alphanumeric (a-z, 0-9) only")
+		print("  • Labels with space must be put in quotes")
 		print("  • Amount must be numeric")
 
 		print("\nType 'help detailed' for full documentation")
@@ -98,8 +98,8 @@ class Help:
 		print("\nVALIDATION RULES:")
 		print("  • Amount must be numeric (e.g., 100, 2500)")
 		print("  • ID must be numeric (for delete/modify)")
-		print("  • Labels must match: [a-zA-Z0-9_]+")
-		print("  • Labels cannot contain spaces or quotes")
+		print("  • Labels must match: [a-zA-Z0-9]+")
+		print("  • Labels must be contained quotes")
 		print("  • Commands are case-insensitive")
 
 		print("\nNOTES:")

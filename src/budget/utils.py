@@ -7,9 +7,11 @@ class Utils:
 		self.isConfirm=False
 		self.config = config.Config()
 		self.terminal_width = self.config.get('display.terminal_width', 60)
+
 	def center(self,string,width):
 		padding = int((self.terminal_width - len(string)) / 2)
 		return " " * padding + string + " " * padding
+
 	def cls(self):
 		try:
 			if platform.system().lower().startswith("win"):
@@ -19,24 +21,28 @@ class Utils:
 		except Exception:
 			for _ in range(50):
 				print()
+
 	def end(self):
 		self.cls()
-		print("Goodbye, Thanks for using ENJ0Y Budget Managment System. \nClosing Program...")
+		return [True, "Goodbye, Thanks for using ENJ0Y Budget Managment System. \nClosing Program..."]
+
 	def confirm(self,object):
-		self.cls()
-		confirm = str(input("Confirm \""+object+"\" (y/n)? "))
-		if confirm.lower() == "y":
+		is_confirm = False
+		while not is_confirm:
 			self.cls()
-			print("Confirmed...")
-			self.isConfirm = True
-		elif confirm.lower() == "n":
-			self.cls()
-			print("...")
-		else:
-			self.cls()
-			print("Invaild Input...")
-			self.confirm(object)
-		pass
+			confirm = str(input("Confirm \""+object+"\" (y/n)? "))
+			if confirm.lower() == "y":
+				self.cls()
+				is_confirm = True
+				return [True, "Confirmed..."]
+			elif confirm.lower() == "n":
+				self.cls()
+				is_confirm = True
+				return [False, "..."]
+			else:
+				self.cls()
+				print ("Invaild Input...")
+
 	def encrypt(self,pin: str) -> str:
 		if len(pin) != 4:
 			raise ValueError("PIN must be 4 digits")
@@ -57,6 +63,7 @@ class Utils:
 		encryptedPin = (d1 * 1000) + (d2 * 100) + (d3 * 10) + d4
 
 		return f"{encryptedPin:04d}"
+		
 	def decrypt(self,e_pin: str) -> str:
 		if len(e_pin) != 4:
 			raise ValueError("Encrypted PIN must be 4 digits")
