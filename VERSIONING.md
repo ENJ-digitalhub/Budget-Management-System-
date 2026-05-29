@@ -84,6 +84,32 @@ This update introduces controlled data removal capabilities and refines existing
 
 ---
 
+### v1.4.0 – Audit Trail, Undo Actions & Smart Safeguards
+
+This version focuses on transparency, recoverability, and smarter control over destructive operations. Building on the deletion improvements in v1.3.0, it introduces audit tracking and undo capabilities while strengthening system intelligence.
+
+**Features:**
+
+Added audit trail logging for all delete and remove actions
+
+Introduced undo functionality for recently deleted records
+
+Implemented soft delete option (temporary removal before permanent deletion)
+
+Enhanced confirmation prompts with contextual warnings for high-risk actions
+
+Added bulk operation safeguards to prevent unintended mass deletions
+
+Improved system feedback messages for clearer user awareness of actions taken
+
+Optimized performance for handling large-scale data modifications
+
+
+**Summary:**
+This update makes data management more transparent and forgiving by enabling action tracking and recovery. With audit logs, undo support, and smarter safeguards, users gain greater confidence and control when performing critical operations, reducing risk while improving usability.
+
+---
+
 ## Versioning Philosophy
 
 This project follows a structured evolution approach:
