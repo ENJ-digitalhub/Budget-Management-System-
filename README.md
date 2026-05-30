@@ -206,16 +206,16 @@ ENJOY_BudgetCLI/
 
 ### 🧪 Example Commands
 
-allowance add 1000
-expenses add 1500 lunch
-expenses remove 1500 lunch_returned
-expenses delete 5
-expenses modify 3 200 dinner
-expenses show
-expenses total 2026-12
-expenses status 2026-12-05
-expenses search lunch
-report 2026-02
+- allowance add 1000
+- expenses add 1500 lunch
+- expenses remove 1500 'lunch returned'
+- expenses delete 5
+- expenses modify 3 200 dinner
+- expenses show
+- expenses total 2026-12
+- status 2026-12-05
+- expenses search lunch
+- report 2026-02
 
 ---
 
