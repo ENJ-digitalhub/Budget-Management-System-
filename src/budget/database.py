@@ -36,8 +36,9 @@ class Database:
 
 		# Get the path to the parent folder (where src/ lives)
 		base_dir = os.path.dirname(os.path.abspath(__file__))  # __file__ is src/database.py
-		project_dir = os.path.dirname(base_dir)   
-		
+		src_dir = os.path.dirname(base_dir)   
+		project_dir = os.path.dirname(src_dir)
+
 		# Ensure data folder exists
 		data_dir = os.path.join(project_dir, "data")
 		if not os.path.exists(data_dir):
@@ -94,8 +95,9 @@ class Database:
 
 		# Get the path to the parent folder (where src/ lives)
 		base_dir = os.path.dirname(os.path.abspath(__file__))
-		project_dir = os.path.dirname(base_dir)   
-		
+		src_dir = os.path.dirname(base_dir)   
+		project_dir = os.path.dirname(src_dir)
+
 		# Ensure data folder exists
 		data_dir = os.path.join(project_dir, "data")
 		if not os.path.exists(data_dir):

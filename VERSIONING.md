@@ -116,11 +116,25 @@ This project follows a structured evolution approach:
 
 ## Future Roadmap (Planned)
 
-- Persistent storage system (file-based or database)
-- Advanced analytics and reporting expansion
-- Export functionality (CSV / Excel)
-- Plugin or module-based architecture
-- Improved error handling system
+### v1.5.0 – Dynamic Timestamp Integration
+- Add dynamic timestamp display on startup page
+- Improve user awareness of current session time
+- Enhance overall CLI presentation
+### v1.6.0 – Last Operation Integration
+- Introduce ability to modify the last entered record without ID
+- Introduce ability to delete the last entered record without ID
+- Improve usability and speed of recent operations
+- Reduce dependency on manual ID tracking
+### v1.7.0 – Search Upgrade Integration
+- Enhance search functionality to support:
+- Date-based filtering
+- Label-based filtering
+- Improve query flexibility and result accuracy
+- Enable more powerful data exploration
+### v1.8.0 – Balance Command Integration
+- Replace status command with balance for clearer meaning
+- Improve command readability and user understanding
+- Align terminology with financial standards
 
 ---
 

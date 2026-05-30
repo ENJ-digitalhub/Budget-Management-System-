@@ -1,13 +1,13 @@
-# 💰 BudgetCLI – Budget Management System
+# 💰 ENJ0Y Budget CLI – Budget Management System
 
-![Status](https://img.shields.io/badge/Status-v1.0_Active-green)
+![Status](https://img.shields.io/badge/Status-v1.4.0_Active-green)
 ![Python](https://img.shields.io/badge/Python-3.8%2B-blue)
-![SQLite](https://img.shields.io/badge/Database-SQLite-orange)
+![Database](https://img.shields.io/badge/Storage-File%20%7C%20SQLite_(Planned)-orange)
 ![Interface](https://img.shields.io/badge/Interface-CLI-lightgrey)
 
-**BudgetCLI** is a **Python command-line application** built to help users track **daily allowances, budgets, expenses, income, and savings** in a structured, reliable, and efficient way.
+**ENJ0Y Budget CLI** is a transaction-based command-line financial tracking system designed to help users manage allowances, expenses, income, and savings with precision, safety, and structured data flow.
 
-Inspired by real-life daily budgeting records, BudgetCLI replaces complex spreadsheets with a **fast, offline, and persistent CLI tool** powered by **SQLite**.
+Built with a strong focus on data integrity, validation, and modular architecture, the system evolves incrementally using semantic versioning principles.
 
 ---
 
@@ -16,189 +16,235 @@ Inspired by real-life daily budgeting records, BudgetCLI replaces complex spread
 - [Features](#-features)
 - [Tech Stack](#-tech-stack)
 - [Project Structure](#-project-structure)
+- [Command System](#️-command-system)
 - [Example Commands](#-example-commands)
-- [Sample Daily Summary Output](#-sample-daily-summary-output)
-- [Configuration](#-configuration-settingsjson)
-- [Version Roadmap](#-version-roadmap)
-- [Project Goals](#-project-goals)
-- [License](#-license)
+- [Core Design Philosophy](#-design-philosophy)
+- [Version History](#-version-history)
+- [Roadmap](#-roadmap)
 - [Author](#-author)
 
 ---
 
 ## 📌 Features
 
-### 🔹 Daily Budget Management
-- Set daily allowance
-- Define transport and diet budgets
-- Record actual transport and diet spending
-- Automatic balance calculation
-- Daily contribution tracking
+### Transaction-Based Ledger System
 
-### 🔹 Income & Expense Tracking
-- Record extra income (e.g., gifts, payments, change)
-- Record extra expenses (e.g., airtime, USSD charges, levies)
-- Multiple income and expense entries per day
-- Clearly labeled transactions for easy review
+- Every operation is recorded as a transaction
+- “Remove” creates adjustment entries (audit-safe)
+- “Delete” performs permanent removal (controlled)
 
-### 🔹 Reporting
-- Full daily summary (spreadsheet-style output)
-- Monthly summaries with subtotals
-- Net daily and monthly balance calculation
-- Overspending alerts and negative balance indicators
+### Budget & Financial Tracking
 
-### 🔹 Configuration
-- JSON-based settings file
+- Allowance management (base budget)
+- Expense tracking with labels
+- Income tracking
+- Savings tracking
+- Multiple entries per category
 
-### 🔹 Data Persistence
-- SQLite database for all financial records
-- Automatic table creation on first run
-- Safe, offline-first storage
+### Data Integrity (v1.4.0)
+
+- Strict validation layer for all inputs
+- Integrity checks on create, update, delete
+- Protection against inconsistent data states
+- Improved error handling and system reliability
+
+### Reporting & Insights
+
+- Category-based summaries
+- Monthly and daily totals
+- Search and filtering capabilities
+- Report generation by date
+
+### CLI Command Engine
+
+- Structured command parsing
+- Category + action-based execution
+- Modular command routing system
 
 ---
 
 ## 🛠 Tech Stack
 
-| Component | Technology |
-|---------|-----------|
-| Language | Python |
-| Database | SQLite |
-| Configuration | JSON |
-| Interface | Command Line (CMD / Terminal) |
+Component| Technology
+Language| Python
+Interface| Command Line (CLI)
+Storage| In-memory → File/DB (Planned)
+Validation| Custom validation module
+Architecture| Modular (Command-driven)
 
 ---
 
 ## 📂 Project Structure
 
-```text
-BudgetCLI/
-├── data/
-│   ├── userA/
-│   │   └── budget.db
-│   ├── userB/
-│   │   └── budget.db
-├── config/
-│   └── settings.json          # Application configuration
+```
+ENJOY_BudgetCLI/
 ├── src/
-│   ├── app.py                 # Application entry point
-│   ├── commands.py            # CLI command parsing & dispatch
-│   ├── database.py            # Database connection & queries
-│   ├── user.py                # User / session / daily state model
-│   ├── utils.py               # Utilities & helpers
-│   └── help.py                # Help & command documentation
+│   └── budgetcli/
+│       ├── app.py              # Entry point (bootstrap system)
+│       ├── commands.py         # Command parsing & execution
+│       ├── database.py         # Data access layer (SQL/file abstraction)
+│       ├── config.py           # Config loader interface
+│       ├── validator.py        # Input validation layer
+│       ├── user.py             # Auth/session handling
+│       ├── help.py             # CLI help system
+│       └── utils/              # shared helpers (optional growth folder)
+
+├── data/
+│   ├── budget.db               # main database file (or user.db consolidated)
+│   ├── users/                 # user-specific files if needed
+│   │   ├── userA/
+│   │   ├── userB/
+│   │   └── ...
+
+├── config/
+│   └── settings.json          # application configuration
+
+├── tests/                      # (future: unit tests)
+├── pyproject.toml
 └── README.md
-
 ```
 
 ---
 
-## 🚀 Example Commands
+## ⚙️ Command System
 
-allowance add <amount>
-allowance show
-expenses remove <id>
-income modify <id> <amount> <label>
-savings total <YYYY-MM>
+### Format
 
----
+[category] [action] [parameters...]
 
-## ⚙ Configuration (settings.json)
+#### Categories
 
-{
-  "database": {
-    "path": "data/<username>/budget.db"
-  }
-}
+- allowance
+- expenses
+- income
+- savings
 
+#### Actions
 
----
-
-## 🧩 Version Roadmap
-
-### 🚀 v1.0.0 — Single User, Secure, Daily Use (FOUNDATION)
-
-**Goal:** A usable, safe, daily budgeting tool for one user at a time
-
-#### Features
-
-User creation (username + PIN)
-
-PIN-based login
-
-Per-user data directory
-
-```
-data/<username>/budget.db
-```
-
-Automatic DB initialization
-
-Daily budgeting
-
-Income & expense tracking
-
-SQLite persistence
-
-Daily summary reports
-
-✔️ This version already feels complete and real
-
-### 🔧 v2.0.0 — Productivity & Portability
-
-**Goal:** Make data easier to review and move
-
-#### Features
-
-Monthly summaries [v1.1.0]
-
-CSV export
-
-Backup & restore
-
-Read-only history navigation improvements
-
-### 🌐 v3.0.0 — Power User & Scale
-
-**Goal:** Advanced insights and multiple users
-
-#### Features
-
-Migration to GUI
-
-Advanced analytics
-
-Category trends
-
-Yearly reports
-
-Optional multi-user sessions (switch user without restart)
-
-Optional encryption at rest
+- add
+- remove
+- delete
+- modify
+- show
+- total
+- status
+- search
+- report
 
 ---
 
-## 🎯 Project Goals
+### 🧪 Example Commands
 
-Replace manual spreadsheet budgeting
-
-Encourage daily financial discipline
-
-Provide clear visibility into spending habits
-
-Serve as a portfolio-grade Python CLI project
-
-
+allowance add 1000
+expenses add 1500 lunch
+expenses remove 1500 lunch_returned
+expenses delete 5
+expenses modify 3 200 dinner
+expenses show
+expenses total 2026-12
+expenses status 2026-12-05
+expenses search lunch
+report 2026-02
 
 ---
 
-## 📄 License
+### ⚠️ Validation Rules
 
-This project is licensed under the MIT License — free to use, modify, and distribute with proper attribution.
+- Amount must be numeric
+- ID must be numeric
+- Labels must match: "[a-zA-Z0-9]+"
+- Labels with spaces must be quoted
+- Commands are case-insensitive
 
+---
+
+### 🧠 Core Behavior
+
+Action| Behavior
+add| Creates a new record
+remove| Creates adjustment (non-destructive)
+delete| Permanently removes record
+modify| Updates existing record
+
+---
+
+### 🧩 Design Philosophy
+
+- Stability first — system must always run
+- Incremental feature growth
+- Strong validation before execution
+- Clear separation of concerns
+- Audit-safe financial tracking
+- Predictable and reversible changes
+
+---
+
+## 📦 Version History
+
+### v1.0.0 – Initial Application Release
+
+- Core CLI system
+- Basic budget tracking
+- Command routing
+- Foundational architecture
+
+---
+
+### v1.1.0 – Report Function Integration
+
+- Reporting system added
+- Financial summaries
+- Improved CLI output formatting
+
+---
+
+### v1.2.0 – Entry Point Integration
+
+- Centralized application entry point
+- Improved startup flow
+- Better architecture separation
+
+---
+
+### v1.3.0 – Delete & Remove Logic Upgrade
+
+- Introduced delete functionality
+- Improved remove logic (adjustments)
+- Added validation for destructive operations
+- Strengthened data safety
+
+---
+
+### v1.4.0 – Data Integrity Integration
+
+- Full validation layer introduced
+- Integrity checks across operations
+- Data consistency enforcement
+- Improved error handling
+- Logging for inconsistencies
+
+---
+
+## 🚀 Roadmap
+
+- Persistent storage (SQLite / file-based)
+- Advanced analytics dashboard
+- Export system (CSV / Excel)
+- Authentication system expansion
+- Modular plugin architecture
+- API layer (future transition to web)
 
 ---
 
 ## 👤 Author
 
-ENJ-digitalhub
-Python Developer | CLI & Systems Projects
+**Ekwere Noble**
+
+---
+
+## 📌 Notes
+
+- Always update version before pushing changes
+- Do not skip versions for feature releases
+- PATCH versions = fixes only
+- This system follows semantic versioning strictly
