@@ -1,5 +1,5 @@
 {
-  "version": "1.4.0",
+  "version": "1.4.2",
   "application": {
     "name": "ENJ0Y Budget CLI",
     "description": "A CLI tool for managing personal budget",

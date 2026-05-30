@@ -110,6 +110,38 @@ class Commands:
 
 	def deleteExecutor(self,commandList):
 		category, id = commandList[0], commandList[2]
+		old_record = ()
+
+		# SQL to retrive old records
+		sql = f"""
+			SELECT * FROM {category}
+			WHERE id = (?)
+		"""
+		params = (id,)
+
+
+		try:
+			old_record = self.db.query(sql,params)
+			if len(old_record) == 1:
+				old_record = self.db.query(sql,params)[0]
+			else:
+				return [False, f"ID {id} not found in {category}"]
+		except Exception as e:
+			return [False, f"An error occured! {e}"]
+
+
+		# Confirming that the user whats to continue with the delete action 
+		is_confirm = False
+		while not is_confirm:
+			confirm = str(input(f"""You are about to delete this {category}:\n\nCurrent: {old_record}\n\nThis action cannot be undone\n\nAre ypu sure you want to delete this record?(Y/N)"""))
+			if confirm.lower() == 'y':
+				is_confirm = True
+			elif confirm.lower() == 'n':
+				is_confirm = True
+				return [False, "Try again!"]
+			else:
+				print("Invalid Input! Enter 'y' or 'n'.")
+
 		print("deleting...")
 		sql = f"""
 			DELETE FROM {category} 
@@ -127,6 +159,34 @@ class Commands:
    
 	def modifyExecutor(self,commandList):
 		category, id, amount, label = commandList[0], commandList[2], commandList[3], commandList[4]
+		old_record = ()
+
+		sql = f"""
+			SELECT * FROM {category}
+			WHERE id = (?)
+		"""
+		params = (id,)
+
+		try:
+			old_record = self.db.query(sql,params)
+			if len(old_record) == 1:
+				old_record = self.db.query(sql,params)[0]
+			else:
+				return [False, f"ID {id} not found in {category}"]
+		except Exception as e:
+			return [False, f"An error occured! {e}"]
+
+		is_confirm = False
+		while not is_confirm:
+			confirm = str(input(f"""You are about to update this {category}:\n\nCurrent(amount, label): ({old_record[3]},'{old_record[2]}')\n\nNew: ({amount},'{label}')\n\nAre ypu sure you want to apply this change?(Y/N)"""))
+			if confirm.lower() == 'y':
+				is_confirm = True
+			elif confirm.lower() == 'n':
+				is_confirm = True
+				return [False, "Try again!"]
+			else:
+				print("Invalid Input! Enter 'y' or 'n'.")
+
 		print("modifying...")
 		sql = f"""
 			UPDATE {category}
