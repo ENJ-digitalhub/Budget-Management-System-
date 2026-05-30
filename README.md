@@ -63,14 +63,85 @@ Built with a strong focus on data integrity, validation, and modular architectur
 
 ---
 
+## 🚀 Quick Start
+
+```
+git clone https://github.com/your-username/your-repo-name.git
+cd your-repo-name
+pip install .
+enj0y-bugdet
+```
+
+---
+
+## ⚙️ Installation
+
+### 1. Clone the Repository
+
+```
+git clone https://github.com/your-username/your-repo-name.git
+cd your-repo-name
+```
+
+---
+
+### 2. Create a Virtual Environment (Recommended)
+
+```
+python -m venv venv
+
+# Activate the environment:
+
+venv\Scripts\activate # Windows
+
+source venv/bin/activate # Linux / macOS
+```
+
+---
+
+### 3. Install the Package
+
+```
+pip install .
+```
+
+---
+
+### 4. Run the Application
+
+```
+enj0y-budget
+```
+
+---
+
+### ✅ Verify Installation
+
+```
+pip list
+```
+
+You should see your package listed.
+
+---
+
+### 🗑️ Uninstall (Optional)
+
+```
+pip uninstall enj0y-budget
+```
+
+---
+
 ## 🛠 Tech Stack
 
-Component| Technology
-Language| Python
-Interface| Command Line (CLI)
-Storage| In-memory → File/DB (Planned)
-Validation| Custom validation module
-Architecture| Modular (Command-driven)
+| Component | Technology |
+|-----------|------------|
+| Language | Python |
+| Interface | Command Line (CLI) |
+| Storage | In-memory → File/DB (Planned) |
+| Validation | Custom validation module | 
+| Architecture | Modular (Command-driven) |
 
 ---
 

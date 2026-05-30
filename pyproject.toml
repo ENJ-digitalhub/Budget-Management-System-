@@ -7,4 +7,4 @@ authors = [
 ]
 
 [project.scripts]
-enj0y-budget = "budget.app:main"
+enj0y-budget = "src.budget.app:main"
