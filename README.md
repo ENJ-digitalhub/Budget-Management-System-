@@ -14,6 +14,8 @@ Built with a strong focus on data integrity, validation, and modular architectur
 ## 📑 Table of Contents
 
 - [Features](#-features)
+- [Quick Start](#-quick-start)
+- [Installation](#-installation)
 - [Tech Stack](#-tech-stack)
 - [Project Structure](#-project-structure)
 - [Command System](#️-command-system)
@@ -66,7 +68,7 @@ Built with a strong focus on data integrity, validation, and modular architectur
 ## 🚀 Quick Start
 
 ```
-git clone https://github.com/your-username/your-repo-name.git
+git clone https://github.com/ENJ-digitalhub/Budget-Management-System-.git
 cd your-repo-name
 pip install .
 enj0y-bugdet
@@ -79,7 +81,7 @@ enj0y-bugdet
 ### 1. Clone the Repository
 
 ```
-git clone https://github.com/your-username/your-repo-name.git
+git clone https://github.com/ENJ-digitalhub/Budget-Management-System-.git
 cd your-repo-name
 ```
 
