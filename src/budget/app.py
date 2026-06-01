@@ -77,6 +77,7 @@ class Main:
 				return [False, "Invalid option"]
     
 	def homePage(self):
+		self.logout = False
 		input("Press ENTER to continue...")
 		if not self.user.get_current_user():
 			login = self.user.login()
