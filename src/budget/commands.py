@@ -322,9 +322,9 @@ class Commands:
 					return [False, f"No {category} found for {label}"]
 				# If the record is not None, it means there are record for that date, so we can consider the status as the calculated value
 				else:
-					print  (f"Search '{label}': {record[0]}")
+					print  (f"Search '{label}': {record}")
 					index += 1	 
-				return [True, f"{index} records found in {category}"]
+			return [True, f"{index} records found in {category}"]
 		except Exception as e:
 			return [False, f"An error occured! {e}"]
    
