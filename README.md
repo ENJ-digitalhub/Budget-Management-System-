@@ -152,7 +152,7 @@ pip uninstall enj0y-budget
 ```
 ENJOY_BudgetCLI/
 ├── src/
-│   └── budgetcli/
+│   └── budget/
 │       ├── app.py              # Entry point (bootstrap system)
 │       ├── commands.py         # Command parsing & execution
 │       ├── database.py         # Data access layer (SQL/file abstraction)
