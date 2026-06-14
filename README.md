@@ -69,7 +69,7 @@ Built with a strong focus on data integrity, validation, and modular architectur
 
 ```
 git clone https://github.com/ENJ-digitalhub/Budget-Management-System-.git
-cd your-repo-name
+cd Budget-Management-System-
 pip install .
 enj0y-bugdet
 ```
@@ -82,7 +82,7 @@ enj0y-bugdet
 
 ```
 git clone https://github.com/ENJ-digitalhub/Budget-Management-System-.git
-cd your-repo-name
+cd Budget-Management-System-
 ```
 
 ---
