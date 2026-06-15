@@ -71,8 +71,9 @@ class Main:
 					print(register[1])
 					return True
 			case 3:
-				self.quit = self.tools.end()
-				print (self.tools.end()[1])
+				result = self.tools.end()
+				self.quit = result[0]
+				print(result[1])
 			case _:
 				return [False, "Invalid option"]
     
@@ -109,14 +110,16 @@ class Main:
 			self.command = command
 			
 			if self.command == "quit":
-				self.logout = self.user.logout()[0]
-				self.quit = self.tools.end()[0]
-				print (self.user.logout()[1])
-				print (self.tools.end()[1])
+				result = self.user.logout()
+				self.logout = result[0]
+				print(result[1])
+				result = self.tools.end()
+				print(result[1])
 
 			elif self.command == "logout":
-				self.logout = self.user.logout()[0]
-				print (self.user.logout()[1])
+				result = self.user.logout()
+				self.logout = result[0]
+				print(result[1])
 				self.startupPage()
 
 			elif self.command == "help":

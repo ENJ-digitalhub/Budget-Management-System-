@@ -1,6 +1,6 @@
 # 💰 ENJ0Y Budget CLI – Budget Management System
 
-![Status](https://img.shields.io/badge/Status-v1.4.0_Active-green)
+![Status](https://img.shields.io/badge/Status-v1.4.5_Active-green)
 ![Python](https://img.shields.io/badge/Python-3.8%2B-blue)
 ![Database](https://img.shields.io/badge/Storage-File%20%7C%20SQLite_(Planned)-orange)
 ![Interface](https://img.shields.io/badge/Interface-CLI-lightgrey)

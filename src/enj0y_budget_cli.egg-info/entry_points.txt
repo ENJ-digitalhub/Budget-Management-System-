@@ -1,2 +1,0 @@
-[console_scripts]
-enj0y-budget = budget.app:main

@@ -282,7 +282,9 @@ class Commands:
 	
  	# The status is calculated by summing the total allowance and income for the specified date, and then subtracting the total expenses and savings for that date. If there are no record for that date, the status is considered to be 0.
 	
-	def statusExecutor(self, date= datetime.now().strftime("%Y-%m-%d")):
+	def statusExecutor(self, date=None):
+		if date is None:
+			date = datetime.now().strftime("%Y-%m-%d")
 		print("calculating...")
 		# The COALESCE function is used to return 0 instead of NULL when there are no record for that date, ensuring that the status calculation is accurate even when there are no records.
 		sql = f"""
@@ -328,7 +330,9 @@ class Commands:
 		except Exception as e:
 			return [False, f"An error occured! {e}"]
    
-	def reportExecutor(self, date = datetime.now().strftime("%Y-%m-%d")):
+	def reportExecutor(self, date = None):
+		if date is None:
+			date = datetime.now().strftime("%Y-%m-%d")
 		allowance_cmd = ["allowance", "total", date]
 		expenses_cmd = ["expenses", "total", date]
 		income_cmd = ["income", "total", date]
