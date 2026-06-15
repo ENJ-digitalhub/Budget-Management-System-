@@ -114,6 +114,7 @@ class Main:
 				self.logout = result[0]
 				print(result[1])
 				result = self.tools.end()
+				self.quit = result[0]
 				print(result[1])
 
 			elif self.command == "logout":
